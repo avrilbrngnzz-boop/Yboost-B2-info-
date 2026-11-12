@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form action="/checklogin" method="post" class="auth-form">
+            <div class="form-group">
+                <label for="email_Username">E-mail ou nom d'utilisateur :</label>
+                <input type="text" id="email_Username" name="email_Username" placeholder="Votre identifiant" value="{{.Email_Username}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
+                <!--<a href="/forgot-password" class="forgot-link" style="font-size: 0.8rem; display: block; margin-top: 5px;">Mot de passe oublié ?</a>-->
+            </div>
+
+            <button type="submit" class="btn-black">Connexion</button>
+        </form>
+    </div>
+    =============================================
+    <div>
+        <form action="/checkregister" method="POST" class="auth-form">
+            <div class="form-group">
+                <label>Pseudo :</label>
+                <input type="text" name="username" placeholder="Votre pseudo" value="{{.Username}}" required>
+            </div>
+            <div class="form-group">
+                <label>Email :</label>
+                <input type="email" name="email" placeholder="votre@email.com" value="{{.Email}}" required>
+            </div>
+            <div class="form-group">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <label style="margin-bottom: 0;">Mot de passe :</label>
+                        
+                    <div class="password-info" style="margin: 0; display: flex; align-items: center;">
+                        <div class="tooltip-container" style="display: flex; align-items: center;">
+                            <span class="info-icon" style="width: 16px; height: 16px; line-height: 16px; font-size: 12px;">!</span>
+                            <span class="tooltip-text">
+                                <strong>Critères du mot de passe :</strong><br>
+                                • 12 caractères minimum<br>
+                                • Majuscule & Minuscule<br>
+                                • Chiffre & Caractère spécial<br>
+                                • Sans accent ni espace
+                            </span>
+                        </div>
+                        <span class="info-label" style="font-size: 11px; margin-left: 5px; color: #999;">Exigences de sécurité</span>
+                    </div>
+                </div>
+                    
+                <input type="password" name="password" placeholder="Votre mot de passe" required>
+            </div>
+            <div class="form-group">
+                <label>Confirmer :</label>
+                <input type="password" name="confirmpassword" placeholder="Votre mot de passe" required>
+            </div>
+
+            <button type="submit" class="btn-black">S'inscrire</button>
+        </form>
+    </div>
+{{template "footer" .}}

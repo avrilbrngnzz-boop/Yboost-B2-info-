@@ -1,0 +1,35 @@
+{{ define "header" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        {{if .IsConnected}}
+            <div class="user-profile-header" style="display: flex; align-items: center; gap: 15px;">
+                <a href="/editaccount" title="Paramètres du compte">
+                    <span>{{.Username}}</span>
+                        
+                    <div>
+                        {{if .LoadedPP}}
+                            <img src="{{.LoadedPP}}" alt="Profil" style="width: 35px; height: 35px; object-fit: cover; border-radius: 50%; border: 1px solid var(--grad-orange);">
+                        {{else}}
+                            <img src="/static/pp/defaultPP.png" alt="Profil" style="width: 35px; height: 35px; object-fit: cover; border-radius: 50%; border: 1px solid #444;">
+                        {{end}}
+                    </div>
+                </a>
+                    
+                <form action="/logout" method="POST" style="display: inline;">
+                    <button type="submit" title="Déconnexion">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                </form>
+            </div>
+        {{else}}
+            <a href="/connexion">Connexion / Inscription</a>
+        {{end}}
+    </div>
+{{ end }}

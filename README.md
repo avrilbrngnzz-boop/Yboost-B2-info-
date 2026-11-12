@@ -1,3 +1,3 @@
 # Yboost-B2-info-
 
-Avril Ludivine Thibault
+Avril Ludivine Thibaud
