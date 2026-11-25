@@ -29,17 +29,26 @@ func StartServer() {
 	})
 
 	http.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
-		homeHandler(w, r, &userInfos)
+		// homeHandler(w, r, &userInfos)
+		forumHomeHandler(w, r, &userInfos)
 	})
+
+	http.HandleFunc("/createpost", func(w http.ResponseWriter, r *http.Request) {
+		createPostHandler(w, r, &userInfos)
+	})
+
 	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {
 		connexionHandler(w, r, &userInfos)
 	})
+	
 	http.HandleFunc("/checklogin", func(w http.ResponseWriter, r *http.Request) {
 		checkloginHandler(w, r, &userInfos)
 	})
+
 	http.HandleFunc("/checkregister", func(w http.ResponseWriter, r *http.Request) {
 		checkregisterHandler(w, r, &userInfos)
 	})
+
 	http.HandleFunc("/editaccount", func(w http.ResponseWriter, r *http.Request) {
 		if userInfos.Email != "" {
 			userInfos.LoadedPP, _ = getUserPP(userInfos.Email)
