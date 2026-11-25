@@ -83,3 +83,59 @@ func UpdateUserProfile(userID int, username, photoPath string) error {
 	}
 	return err
 }
+
+func GetAllPosts() ([]Post, error) { //COALESCE permet d'eviter une erreur GO quand la photo de profil est NULL
+	query := `
+		SELECT Posts.id, Posts.user_id, Users.username, COALESCE(Users.photo_profil, ''), Posts.title, Posts.content, Posts.created_at, 
+		       (SELECT COUNT(*) FROM Likes WHERE Likes.post_id = Posts.id) AS likes_count
+		FROM Posts
+		INNER JOIN Users ON Posts.user_id = Users.id
+		ORDER BY Posts.created_at DESC
+	`
+	rows, err := db.Query(query)
+	if err != nil {
+		ErrorLogger.Printf("Erreur récupération posts: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []Post
+	for rows.Next() {
+		var p Post
+		err := rows.Scan(&p.ID, &p.UserID, &p.Author, &p.AuthorPP, &p.Title, &p.Content, &p.CreatedAt, &p.LikesCount)
+		if err != nil {
+			ErrorLogger.Printf("Erreur lecture ligne post: %v", err)
+			return nil, err
+		}
+		posts = append(posts, p)
+	}
+	return posts, nil
+}
+
+func GetCommentsByPostID(postID int) ([]Comment, error) {
+	query := `
+		SELECT Comments.id, Comments.post_id, Comments.user_id, Users.username, COALESCE(Users.photo_profil, ''), Comments.content, Comments.created_at
+		FROM Comments
+		INNER JOIN Users ON Comments.user_id = Users.id
+		WHERE Comments.post_id = ?
+		ORDER BY Comments.created_at ASC
+	`
+	rows, err := db.Query(query, postID)
+	if err != nil {
+		ErrorLogger.Printf("Erreur récupération commentaires (post %d): %v", postID, err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var comments []Comment
+	for rows.Next() {
+		var c Comment
+		err := rows.Scan(&c.ID, &c.PostID, &c.UserID, &c.Author, &c.AuthorPP, &c.Content, &c.CreatedAt)
+		if err != nil {
+			ErrorLogger.Printf("Erreur lecture ligne commentaire: %v", err)
+			return nil, err
+		}
+		comments = append(comments, c)
+	}
+	return comments, nil
+}
