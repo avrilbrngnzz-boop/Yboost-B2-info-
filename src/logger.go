@@ -12,9 +12,9 @@ var (
 )
 
 func InitLogger() {
-	fil, err := os.OpenFile("server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		log.Fatalf("Impossibl d'ouvrir le fichier log: %v, err")
+		log.Fatalf("Impossible d'ouvrir le fichier log: %v", err)
 	}
 
 	multiWriter := io.MultiWriter(os.Stdout, file)
