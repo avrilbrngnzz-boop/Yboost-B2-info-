@@ -105,7 +105,8 @@ func CreateDB() {
 
 func getUserPP(email string) (string, error) {
 	var pp string
-	err := db.QueryRow("SELECT photo_profil FROM Users WHERE email = ?", email).Scan(&pp)
+	//Ajout de COALESCE pour transformer le NULL de SQLite en chaine vide ""
+	err := db.QueryRow("SELECT COALESCE(photo_profil, '') FROM Users WHERE email = ?", email).Scan(&pp)
 	if err != nil && err != sql.ErrNoRows {
 		ErrorLogger.Printf("Erreur récupération photo_profil pour %s: %v", email, err)
 	}

@@ -1,0 +1,5 @@
+[INFO] 2026/11/25 15:01:11 Fichier yboost.db introuvable: creation automatique effecuée.
+[INFO] 2026/11/25 15:01:11 Verification/creation des tables terminee.
+[ERROR] 2026/11/25 15:04:30 database_funcs.go:110: Erreur récupération photo_profil pour toto.test@gmail.com: sql: Scan error on column index 0, name "photo_profil": converting NULL to string is unsupported
+[ERROR] 2026/11/25 15:04:43 database_funcs.go:110: Erreur récupération photo_profil pour toto.test@gmail.com: sql: Scan error on column index 0, name "photo_profil": converting NULL to string is unsupported
+[ERROR] 2026/11/25 15:04:54 database_funcs.go:110: Erreur récupération photo_profil pour toto.test@gmail.com: sql: Scan error on column index 0, name "photo_profil": converting NULL to string is unsupported
