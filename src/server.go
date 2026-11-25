@@ -30,11 +30,11 @@ func StartServer() {
 
 	http.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
 		// homeHandler(w, r, &userInfos)
-		forumHomeHandler(w, r, &userInfos)
+		recipeHomeHandler(w, r, &userInfos)
 	})
 
-	http.HandleFunc("/createpost", func(w http.ResponseWriter, r *http.Request) {
-		createPostHandler(w, r, &userInfos)
+	http.HandleFunc("/createrecipe", func(w http.ResponseWriter, r *http.Request) {
+		createRecipeHandler(w, r, &userInfos)
 	})
 
 	http.HandleFunc("/connexion", func(w http.ResponseWriter, r *http.Request) {

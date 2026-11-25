@@ -62,36 +62,42 @@ func CreateDB() {
 
 	CREATE TABLE IF NOT EXISTS Session (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		user_id INTEGER,
+		user_id INTEGER NOT NULL,
 		token TEXT NOT NULL,
 		FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
 	);
 
-	CREATE TABLE IF NOT EXISTS Posts (
+	CREATE TABLE IF NOT EXISTS Recipes (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		user_id INTEGER,
+		user_id INTEGER NOT NULL,
 		title TEXT NOT NULL,
-		content TEXT NOT NULL,
+		description TEXT,
+		ingredients TEXT NOT NULL,
+		country_of_origin TEXT,
+		dish_type TEXT, /*exemple: entree, plat, dessert, boisson, etc.*/
+		diet_type TEXT, /*exemple: vegan, vegetarien, sans gluten, etc.*/
+		instructions TEXT NOT NULL,
+		photo_url TEXT,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
 	);
 	CREATE TABLE IF NOT EXISTS Comments (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		user_id INTEGER,
-		post_id INTEGER,
+		user_id INTEGER NOT NULL,
+		recipe_id INTEGER NOT NULL,
 		content TEXT NOT NULL,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE,
-		FOREIGN KEY(post_id) REFERENCES Posts(id) ON DELETE CASCADE
+		FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
 	);
 
-	CREATE TABLE IF NOT EXISTS Likes (
+	CREATE TABLE IF NOT EXISTS Favorites (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		user_id INTEGER,
-		post_id INTEGER,
-		UNIQUE(user_id, post_id),
+		user_id INTEGER NOT NULL,
+		recipe_id INTEGER NOT NULL,
+		UNIQUE(user_id, recipe_id),
 		FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE,
-		FOREIGN KEY(post_id) REFERENCES Posts(id) ON DELETE CASCADE
+		FOREIGN KEY(recipe_id) REFERENCES Recipes(id) ON DELETE CASCADE
 	);
 	`
 	_, err := db.Exec(schema)
